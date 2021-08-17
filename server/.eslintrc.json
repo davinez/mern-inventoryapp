@@ -4,14 +4,10 @@
     "es2021": true,
     "node": true
   },
-  "extends": ["plugin:react/recommended", "airbnb"],
+  "extends": ["airbnb-base"],
   "parserOptions": {
-    "ecmaFeatures": {
-      "jsx": true
-    },
     "ecmaVersion": 12
   },
-  "plugins": ["react"],
   "rules": {
     "operator-linebreak": 0,
     "camelcase": 0,
@@ -20,12 +16,5 @@
     "no-plusplus": 0,
     "no-shadow": 0,
     "consistent-return": 0
-  },
-  "settings": {
-    "import/resolver": {
-      "node": {
-        "extensions": [".js", ".jsx", ".ts", ".tsx"]
-      }
-    }
   }
 }

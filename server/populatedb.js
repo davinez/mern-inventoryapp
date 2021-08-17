@@ -24,8 +24,10 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 const items = [];
 const categories = [];
 
-function categoryCreate(name, cb) {
-  const category = new Category({ name });
+function categoryCreate(name, urlImage, cb) {
+  const categorydetail = { name, urlImage };
+
+  const category = new Category(categorydetail);
 
   category.save((err) => {
     if (err) {
@@ -38,13 +40,14 @@ function categoryCreate(name, cb) {
   });
 }
 
-function itemCreate(name, description, category, stock, price, cb) {
+function itemCreate(name, description, category, stock, price, urlImage, cb) {
   const itemdetail = {
     name,
     description,
     category,
     stock,
     price,
+    urlImage,
   };
 
   const item = new Item(itemdetail);
@@ -64,10 +67,18 @@ function createCategories(cb) {
   async.parallel(
     [
       function (callback) {
-        categoryCreate('Graphics Cards', callback);
+        categoryCreate(
+          'Graphics Cards',
+          'https://pixabay.com/images/id-2810919/',
+          callback
+        );
       },
       function (callback) {
-        categoryCreate('Processors', callback);
+        categoryCreate(
+          'Processors',
+          'https://pixabay.com/images/id-424812/',
+          callback
+        );
       },
     ],
     // optional callback
@@ -80,11 +91,12 @@ function createItems(cb) {
     [
       function (callback) {
         itemCreate(
-          'EVGA RTX 3080',
+          'EVGA RTX 2080',
           '12 GB GDDR6',
           categories[0],
           12,
           1427,
+          'https://pixabay.com/images/id-5268574/',
           callback
         );
       },
@@ -95,6 +107,7 @@ function createItems(cb) {
           categories[0],
           12,
           446,
+          'https://pixabay.com/images/id-1371358/',
           callback
         );
       },

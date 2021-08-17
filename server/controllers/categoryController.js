@@ -16,7 +16,35 @@ exports.categoryList = (req, res, next) => {
     });
 };
 
-exports.categoryDetail = function (req, res, next) {};
+exports.categoryDetail = function (req, res, next) {
+  async.parallel(
+    {
+      category(callback) {
+        Category.findById(req.params.id).exec(callback);
+      },
+
+      categoryItems(callback) {
+        Item.find({ category: req.params.id })
+          .select('_id name stock')
+          .exec(callback);
+      },
+    },
+    (err, results) => {
+      console.log(results);
+      if (err) {
+        return next(err);
+      }
+      if (results.category == null) {
+        // No results.
+        const errNotFound = new Error('Category not found');
+        errNotFound.status = 404;
+        return next(errNotFound);
+      }
+      // Successful, so send
+      res.json({ results });
+    }
+  );
+};
 
 exports.categoryCreatePost = function (req, res, next) {};
 
