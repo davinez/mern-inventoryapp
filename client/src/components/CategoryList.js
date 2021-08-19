@@ -22,7 +22,7 @@ export const CategoryList = () => {
             <Col key={index.toString()} xs="12" sm="4" className="gy-4">
               <Card>
                 <Card.Img variant="top" src={category.urlImage} alt="temp" />
-                <Card.Body className="mx-auto">
+                <Card.Body>
                   <Card.Title>{category.name}</Card.Title>
 
                   <Button
@@ -30,7 +30,7 @@ export const CategoryList = () => {
                     as={Link}
                     to={`/category/${category._id}`}
                   >
-                    Go somewhere
+                    Detail
                   </Button>
                 </Card.Body>
               </Card>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Row, Col, Card, Button } from 'react-bootstrap';
-import { useParams } from 'react-router-dom';
+import { Container, ListGroup } from 'react-bootstrap';
+import { Link, useParams } from 'react-router-dom';
 
 export const CategoryDetail = () => {
   const [category, setCategory] = useState({});
@@ -21,21 +21,23 @@ export const CategoryDetail = () => {
     <>
       {isLoading ? (
         <>
-          <p>Loading</p>
+          <h2 className="mx-auto mt-3 text-center">Loading</h2>
         </>
       ) : (
-        <>
-          {category.categoryItems.map((item, index) => (
-            <div key={index}>{item.name}</div>
-          ))}
-        </>
+        <Container fluid>
+          <h2 className="mx-auto mt-3 text-center">
+            Category: {category.category.name}
+          </h2>
+          <ListGroup variant="flush">
+            {category.categoryItems.map((item, index) => (
+              <ListGroup.Item key={index}>
+                <Link to={`/item/${item._id}`}>{item.name}</Link>
+                <p>Stock: {item.stock}</p>
+              </ListGroup.Item>
+            ))}
+          </ListGroup>
+        </Container>
       )}
     </>
   );
 };
-
-/*
- Object.entries(category.categoryItems).map(([key, value]) => (
-    <div key={key}>{value}</div>
-));
-*/

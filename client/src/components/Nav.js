@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Navbar, NavDropdown, Nav } from 'react-bootstrap';
+import { Container, Navbar, Nav } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 // Nav.Link href => refreshes page and Nav.Link as={Link} uses react router to keep using SPA
