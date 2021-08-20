@@ -30,7 +30,6 @@ exports.categoryDetail = function (req, res, next) {
       },
     },
     (err, results) => {
-      console.log(results);
       if (err) {
         return next(err);
       }
@@ -91,10 +90,85 @@ exports.categoryCreatePost = [
   },
 ];
 
-exports.categoryDeleteGet = function (req, res, next) {};
+exports.categoryDeleteGet = function (req, res, next) {
+  async.parallel(
+    {
+      category(callback) {
+        Category.findById(req.params.id).exec(callback);
+      },
+      items(callback) {
+        Item.find({ category: req.params.id }).exec(callback);
+      },
+    },
+    (err, results) => {
+      if (err) {
+        return next(err);
+      }
+      if (results.category == null) {
+        // No results.
+        return next(err);
+      }
+      // Successful, so send
+      res.json({ results });
+    }
+  );
+};
 
 exports.categoryDeletePost = function (req, res, next) {};
 
-exports.categoryUpdateGet = function (req, res, next) {};
+exports.categoryUpdateGet = function (req, res, next) {
+  // use of "-" to exclude field
+  Category.findById(req.params.id)
+    .select('-__v')
+    .select('-_id')
+    .exec((err, category) => {
+      if (err) {
+        return next(err);
+      }
+      // Category not found
+      if (category == null) {
+        const errCategoryNotFound = new Error('Category not found');
+        errCategoryNotFound.status = 404;
+        return next(errCategoryNotFound);
+      }
+      // Successful, so send
+      res.json({ category });
+    });
+};
 
-exports.categoryUpdatePost = function (req, res, next) {};
+exports.categoryUpdatePost = [
+  body('name', 'Category name required').trim().isLength({ min: 3 }).escape(),
+  body('urlImage', 'URL required').trim().isLength({ min: 4 }).escape(),
+
+  // Process request after validation and sanitization.
+  (req, res, next) => {
+    // Extract the validation errors from a request.
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      res.status(400).send({ error: true, message: 'Check form values' });
+    } else {
+      // Data from form is valid.
+
+      const category = {
+        name: req.body.name,
+        urlImage: req.body.urlImage,
+      };
+
+      Category.findByIdAndUpdate(
+        req.params.id,
+        category,
+        {},
+        (err, categoryUpdated) => {
+          if (err) {
+            return next(err);
+          }
+          // Successful - redirect to category detail page.
+          res.status(200).send({
+            id: categoryUpdated._id,
+          });
+        }
+      );
+    }
+  },
+];

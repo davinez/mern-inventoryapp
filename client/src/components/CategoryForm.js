@@ -1,14 +1,32 @@
-import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useHistory, useParams } from 'react-router-dom';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 
-export const CategoryForm = () => {
+export const CategoryForm = (props) => {
   // controlled inputs
   // key-value pair for each form field
   const [form, setForm] = useState({ name: '', urlImage: '' });
+  // display error returned by the server
   const [error, setError] = useState('');
+  const [postUrl, setPostUrl] = useState('');
 
   const history = useHistory();
+  const { id } = useParams();
+
+  useEffect(() => {
+    async function fetchCategory() {
+      const response = await fetch(`/api/category/${id}/update`);
+      const data = await response.json();
+      setForm(data.category);
+    }
+    // Fill form with existing data if route indicates 'update' and set fetch url
+    if (props.title === 'Update') {
+      fetchCategory();
+      setPostUrl(`/api/category/${id}/update`);
+    } else {
+      setPostUrl(`/api/category/create`);
+    }
+  }, [props.title, id]);
 
   const handleInputChange = (e) => {
     setForm({
@@ -17,10 +35,10 @@ export const CategoryForm = () => {
     });
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
-    fetch('/api/category/create', {
+    fetch(postUrl, {
       method: 'POST',
       body: JSON.stringify(form),
       headers: { 'Content-Type': 'application/json' },
@@ -46,6 +64,7 @@ export const CategoryForm = () => {
     <Container fluid>
       <Row>
         <Col xs="10" sm="6" className="mx-auto mt-4">
+          <h2 className="mt-2 mb-4">{props.title} Category</h2>
           {error && <h2>{error}</h2>}
           <Form onSubmit={handleSubmit}>
             <Form.Group className="mb-3" controlId="inventoryName">

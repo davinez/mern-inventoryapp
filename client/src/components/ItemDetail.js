@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Row, Col, Card } from 'react-bootstrap';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 export const ItemDetail = () => {
   const [item, setItem] = useState({});
@@ -36,6 +36,12 @@ export const ItemDetail = () => {
                   <Card.Text>$ {item.price}</Card.Text>
                 </Card.Body>
               </Card>
+            </Col>
+          </Row>
+          <Row>
+            <Col className="d-flex flex-column ps-4 gap-3 mt-5">
+              <Link to={`/item/${id}/update`}>Update Item</Link>
+              <Link to={`/item/${id}/delete`}>Delete Item</Link>
             </Col>
           </Row>
         </Container>

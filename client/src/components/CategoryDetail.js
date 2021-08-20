@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Container, ListGroup } from 'react-bootstrap';
+import { Container, Row, Col, ListGroup } from 'react-bootstrap';
 import { Link, useParams } from 'react-router-dom';
 
 export const CategoryDetail = () => {
@@ -36,6 +36,12 @@ export const CategoryDetail = () => {
               </ListGroup.Item>
             ))}
           </ListGroup>
+          <Row>
+            <Col className="d-flex flex-column ps-4 gap-3 mt-5">
+              <Link to={`/category/${id}/update`}>Update Category</Link>
+              <Link to={`/category/${id}/delete`}>Delete Category</Link>
+            </Col>
+          </Row>
         </Container>
       )}
     </>

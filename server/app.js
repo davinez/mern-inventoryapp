@@ -40,17 +40,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/api', catalogRouter);
 
 // The last middleware in the chain adds handler methods for errors and HTTP 404 responses.
-app.use((req, res, next) => {
-  next(createError(404));
-});
-
 // error handler
-app.use((err, req, res) => {
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  res.status(err.status || 500);
-  res.render('error');
+app.use((err, req, res, next) => {
+  if (res.headersSent) {
+    return next(err);
+  }
+  res.status(500).send('INTERNAL SERVER ERROR !');
 });
 
 // Run on port 3001 if no value is given to env variable

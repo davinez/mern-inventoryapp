@@ -10,8 +10,6 @@ const itemController = require('../controllers/itemController');
 
 router.get('/category', categoryController.categoryList);
 
-router.get('/category/:id', categoryController.categoryDetail);
-
 router.post('/category/create', categoryController.categoryCreatePost);
 
 router.get('/category/:id/delete', categoryController.categoryDeleteGet);
@@ -22,11 +20,11 @@ router.get('/category/:id/update', categoryController.categoryUpdateGet);
 
 router.post('/category/:id/update', categoryController.categoryUpdatePost);
 
+router.get('/category/:id', categoryController.categoryDetail);
+
 /// Item Routes ///
 
 router.get('/item', itemController.itemList);
-
-router.get('/item/:id', itemController.itemDetail);
 
 router.get('/item/create', itemController.itemCreateGet);
 
@@ -39,5 +37,7 @@ router.post('/item/:id/delete', itemController.itemDeletePost);
 router.get('/item/:id/update', itemController.itemUpdateGet);
 
 router.post('/item/:id/update', itemController.itemUpdatePost);
+
+router.get('/item/:id', itemController.itemDetail);
 
 module.exports = router;
