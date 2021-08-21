@@ -20,7 +20,7 @@ export const CategoryList = () => {
         <Row>
           {categories.map((category, index) => (
             <Col key={index.toString()} xs="12" sm="4" className="gy-4">
-              <Card>
+              <Card className="h-100">
                 <Card.Img variant="top" src={category.urlImage} alt="temp" />
                 <Card.Body>
                   <Card.Title>{category.name}</Card.Title>

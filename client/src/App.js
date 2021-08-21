@@ -8,6 +8,7 @@ import { CategoryForm } from './components/CategoryForm';
 import { CategoryDelete } from './components/CategoryDelete';
 import { ItemDetail } from './components/ItemDetail';
 import { ItemForm } from './components/ItemForm';
+import { ItemDelete } from './components/ItemDelete';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 // Set the 'Detail' route at the end, to avoid conflict with dynamic url => category/:id and category/create (same as :id)
@@ -43,6 +44,9 @@ function App() {
           </Route>
           <Route exact path="/item/:id/update">
             <ItemForm title="Update" />
+          </Route>
+          <Route exact path="/item/:id/delete">
+            <ItemDelete />
           </Route>
           <Route exact path="/item/:id">
             <ItemDetail />

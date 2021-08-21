@@ -24,8 +24,6 @@ router.get('/category/:id', categoryController.categoryDetail);
 
 /// Item Routes ///
 
-router.get('/item', itemController.itemList);
-
 router.get('/item/create', itemController.itemCreateGet);
 
 router.post('/item/create', itemController.itemCreatePost);

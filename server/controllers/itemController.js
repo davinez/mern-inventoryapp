@@ -6,8 +6,6 @@ const Item = require('../models/item');
 // helpers
 const helperSort = require('../utils/sort');
 
-exports.itemList = (req, res, next) => {};
-
 // example route/name/:id the “id” property is available as req.params.id
 exports.itemDetail = function (req, res, next) {
   Item.findById(req.params.id)
@@ -96,9 +94,37 @@ exports.itemCreatePost = [
   },
 ];
 
-exports.itemDeleteGet = function (req, res, next) {};
+exports.itemDeleteGet = function (req, res, next) {
+  Item.findById(req.params.id).exec((err, item) => {
+    if (err) {
+      return next(err);
+    }
+    if (item == null) {
+      // No results.
+      return next(err);
+    }
+    // Successful, so send
+    res.json({ item });
+  });
+};
 
-exports.itemDeletePost = function (req, res, next) {};
+exports.itemDeletePost = function (req, res, next) {
+  Item.findById(req.params.id).exec((err) => {
+    if (err) {
+      return next(err);
+    }
+    // Success
+    Item.findByIdAndRemove(req.body.id, (error) => {
+      if (error) {
+        return next(error);
+      }
+      // Success
+      res.status(200).send({
+        message: 'Item deleted',
+      });
+    });
+  });
+};
 
 exports.itemUpdateGet = function (req, res, next) {
   // use of "-" to exclude field

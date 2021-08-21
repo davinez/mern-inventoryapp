@@ -2,7 +2,6 @@ require('dotenv').config();
 const express = require('express');
 const path = require('path');
 const cors = require('cors');
-const createError = require('http-errors');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const compression = require('compression');
@@ -36,7 +35,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// URL will be /
+// server URL will be /api/catalogRoutes
 app.use('/api', catalogRouter);
 
 // The last middleware in the chain adds handler methods for errors and HTTP 404 responses.

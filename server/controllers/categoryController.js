@@ -114,7 +114,42 @@ exports.categoryDeleteGet = function (req, res, next) {
   );
 };
 
-exports.categoryDeletePost = function (req, res, next) {};
+exports.categoryDeletePost = function (req, res, next) {
+  async.parallel(
+    {
+      category(callback) {
+        Category.findById(req.body.id).exec(callback);
+      },
+      items(callback) {
+        Item.find({ category: req.body.id }).exec(callback);
+      },
+    },
+    (err, results) => {
+      if (err) {
+        return next(err);
+      }
+      // Success
+      if (results.items.length > 0) {
+        // Category still has items. Send them in same way as for GET route.
+        res.status(400).send({
+          error: true,
+          message: 'Category has items, delete them first',
+        });
+      } else {
+        // Category has no items. Delete object and redirect to the list of categories.
+        Category.findByIdAndRemove(req.body.id, (err) => {
+          if (err) {
+            return next(err);
+          }
+          // Success - go to author list
+          res.status(200).send({
+            message: 'Category deleted',
+          });
+        });
+      }
+    }
+  );
+};
 
 exports.categoryUpdateGet = function (req, res, next) {
   // use of "-" to exclude field
@@ -138,7 +173,7 @@ exports.categoryUpdateGet = function (req, res, next) {
 
 exports.categoryUpdatePost = [
   body('name', 'Category name required').trim().isLength({ min: 3 }).escape(),
-  body('urlImage', 'URL required').trim().isLength({ min: 4 }).escape(),
+  body('urlImage', 'URL required').trim().isLength({ min: 4 }),
 
   // Process request after validation and sanitization.
   (req, res, next) => {
