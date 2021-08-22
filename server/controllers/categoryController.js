@@ -47,7 +47,7 @@ exports.categoryDetail = function (req, res, next) {
 
 exports.categoryCreatePost = [
   body('name', 'Category name required').trim().isLength({ min: 3 }).escape(),
-  body('urlImage', 'URL required').trim().isLength({ min: 4 }).escape(),
+  body('urlImage', 'URL required').trim().isLength({ min: 0 }),
 
   (req, res, next) => {
     const errors = validationResult(req);
@@ -173,7 +173,7 @@ exports.categoryUpdateGet = function (req, res, next) {
 
 exports.categoryUpdatePost = [
   body('name', 'Category name required').trim().isLength({ min: 3 }).escape(),
-  body('urlImage', 'URL required').trim().isLength({ min: 4 }),
+  body('urlImage', 'URL required').trim().isLength({ min: 0 }),
 
   // Process request after validation and sanitization.
   (req, res, next) => {

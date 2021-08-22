@@ -168,11 +168,10 @@ export const ItemForm = (props) => {
               <Form.Label>Image URL</Form.Label>
               <Form.Control
                 type="text"
-                placeholder="Enter image url"
+                placeholder="Enter image url (Optional)"
                 name="urlImage"
                 value={form.urlImage}
                 minLength="4"
-                required
                 onChange={handleInputChange}
               />
             </Form.Group>

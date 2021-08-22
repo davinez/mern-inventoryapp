@@ -19,9 +19,17 @@ export const CategoryList = () => {
       <Container fluid>
         <Row>
           {categories.map((category, index) => (
-            <Col key={index.toString()} xs="12" sm="4" className="gy-4">
+            <Col key={index} xs="12" sm="4" className="gy-4">
               <Card className="h-100">
-                <Card.Img variant="top" src={category.urlImage} alt="temp" />
+                <Card.Img
+                  variant="top"
+                  src={
+                    category.urlImage.length === 0
+                      ? process.env.PUBLIC_URL + '/images/box.jpg'
+                      : category.urlImage
+                  }
+                  alt="temp"
+                />
                 <Card.Body>
                   <Card.Title>{category.name}</Card.Title>
 

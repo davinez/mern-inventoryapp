@@ -64,8 +64,8 @@ export const CategoryForm = (props) => {
     <Container fluid>
       <Row>
         <Col xs="10" sm="6" className="mx-auto mt-4">
+          {error && <h2>Error: {error}</h2>}
           <h2 className="mt-2 mb-4">{props.title} Category</h2>
-          {error && <h2>{error}</h2>}
           <Form onSubmit={handleSubmit}>
             <Form.Group className="mb-3" controlId="inventoryName">
               <Form.Label>Category Name</Form.Label>
@@ -84,11 +84,10 @@ export const CategoryForm = (props) => {
               <Form.Label>Image URL</Form.Label>
               <Form.Control
                 type="text"
-                placeholder="Enter image url"
+                placeholder="Enter image url (Optional)"
                 name="urlImage"
                 value={form.urlImage}
                 minLength="4"
-                required
                 onChange={handleInputChange}
               />
             </Form.Group>

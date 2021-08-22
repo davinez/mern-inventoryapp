@@ -28,7 +28,15 @@ export const ItemDetail = () => {
           <Row>
             <Col xs="12" sm="5" className="mx-auto mt-5">
               <Card>
-                <Card.Img variant="top" src={item.urlImage} alt="item image" />
+                <Card.Img
+                  variant="top"
+                  src={
+                    item.urlImage.length === 0
+                      ? process.env.PUBLIC_URL + '/images/box.jpg'
+                      : item.urlImage
+                  }
+                  alt="item image"
+                />
                 <Card.Body className="text-center">
                   <Card.Title>{item.name}</Card.Title>
                   <Card.Text>{item.description}</Card.Text>
