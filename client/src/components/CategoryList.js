@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 
 export const CategoryList = () => {
   const [categories, setCategories] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     async function fetchCategories() {
@@ -12,6 +13,7 @@ export const CategoryList = () => {
       );
       const data = await response.json();
       setCategories(data.categories);
+      setIsLoading(false);
     }
     fetchCategories();
   }, []);
@@ -20,6 +22,7 @@ export const CategoryList = () => {
     <>
       <Container fluid>
         <Row>
+          {isLoading && <h2>Loading</h2>}
           {categories.map((category, index) => (
             <Col key={index} xs="12" sm="4" className="gy-4">
               <Card className="h-100">

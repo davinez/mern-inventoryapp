@@ -47,7 +47,7 @@ exports.itemCreatePost = [
   body('category', 'Category required').trim().isMongoId().escape(),
   body('stock', 'Stock required').isNumeric().escape(),
   body('price', 'Price required').isNumeric().escape(),
-  body('urlImage', 'URL required').trim().isLength({ min: 0 }),
+  body('urlImage', 'URL required').trim(),
 
   (req, res, next) => {
     const errors = validationResult(req);
