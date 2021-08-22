@@ -1,1 +1,15 @@
+/*********************************************/
+/*          CUSTOMIZED DEFAULTS              */
+/*********************************************/
+
 @import '../node_modules/bootstrap/scss/bootstrap.scss';
+
+.btn-primary {
+  @include button-variant(
+    rgb(0, 0, 0),
+    rgb(0, 0, 0),
+    rgb(255, 255, 255),
+    rgb(175, 101, 101)
+  );
+  color: rgb(255, 255, 255);
+}

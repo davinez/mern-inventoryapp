@@ -7,7 +7,9 @@ export const CategoryList = () => {
 
   useEffect(() => {
     async function fetchCategories() {
-      const response = await fetch('/api/category');
+      const response = await fetch(
+        'https://davi-server-inventory.herokuapp.com/api/category'
+      );
       const data = await response.json();
       setCategories(data.categories);
     }

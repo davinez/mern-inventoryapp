@@ -24,7 +24,9 @@ export const ItemForm = (props) => {
 
   useEffect(() => {
     async function fetchCategories() {
-      const response = await fetch('/api/item/create');
+      const response = await fetch(
+        'https://davi-server-inventory.herokuapp.com/api/item/create'
+      );
       const data = await response.json();
       setCategories(data.categories);
     }
@@ -32,16 +34,20 @@ export const ItemForm = (props) => {
     fetchCategories();
 
     async function fetchItem() {
-      const response = await fetch(`/api/item/${id}/update`);
+      const response = await fetch(
+        `https://davi-server-inventory.herokuapp.com/api/item/${id}/update`
+      );
       const data = await response.json();
       setForm(data.item);
     }
     // Fill form with existing data if route indicates 'update' and set fetch url
     if (props.title === 'Update') {
       fetchItem();
-      setPostUrl(`/api/item/${id}/update`);
+      setPostUrl(
+        `https://davi-server-inventory.herokuapp.com/api/item/${id}/update`
+      );
     } else {
-      setPostUrl(`/api/item/create`);
+      setPostUrl(`https://davi-server-inventory.herokuapp.com/api/item/create`);
     }
   }, [props.title, id]);
 

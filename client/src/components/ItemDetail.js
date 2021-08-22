@@ -9,7 +9,9 @@ export const ItemDetail = () => {
 
   useEffect(() => {
     async function fetchItemDetail() {
-      const response = await fetch(`/api/item/${id}`);
+      const response = await fetch(
+        `https://davi-server-inventory.herokuapp.com/api/item/${id}`
+      );
       const data = await response.json();
       setItem(data.item);
       setIsLoading(false);

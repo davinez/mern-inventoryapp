@@ -15,7 +15,9 @@ export const CategoryDelete = () => {
   useEffect(() => {
     // get data info
     async function fetchCategoryDetail() {
-      const response = await fetch(`/api/category/${id}/delete`);
+      const response = await fetch(
+        `https://davi-server-inventory.herokuapp.com/api/category/${id}/delete`
+      );
       const data = await response.json();
       setCategoryData(data.results);
       // categoryId for POST 'body'
@@ -29,11 +31,14 @@ export const CategoryDelete = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    fetch(`/api/category/${id}/delete`, {
-      method: 'POST',
-      body: JSON.stringify(categoryId),
-      headers: { 'Content-Type': 'application/json' },
-    })
+    fetch(
+      `https://davi-server-inventory.herokuapp.com/api/category/${id}/delete`,
+      {
+        method: 'POST',
+        body: JSON.stringify(categoryId),
+        headers: { 'Content-Type': 'application/json' },
+      }
+    )
       .then(function (response) {
         return response.json();
       })

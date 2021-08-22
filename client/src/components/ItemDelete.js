@@ -13,7 +13,9 @@ export const ItemDelete = () => {
   useEffect(() => {
     // get data info
     async function fetchItemDetail() {
-      const response = await fetch(`/api/item/${id}/delete`);
+      const response = await fetch(
+        `https://davi-server-inventory.herokuapp.com/api/item/${id}/delete`
+      );
       const data = await response.json();
       setItemData(data.item);
       // itemId for POST 'body'
@@ -27,7 +29,7 @@ export const ItemDelete = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    fetch(`/api/item/${id}/delete`, {
+    fetch(`https://davi-server-inventory.herokuapp.com/api/item/${id}/delete`, {
       method: 'POST',
       body: JSON.stringify(itemId),
       headers: { 'Content-Type': 'application/json' },

@@ -15,16 +15,22 @@ export const CategoryForm = (props) => {
 
   useEffect(() => {
     async function fetchCategory() {
-      const response = await fetch(`/api/category/${id}/update`);
+      const response = await fetch(
+        `https://davi-server-inventory.herokuapp.com/api/category/${id}/update`
+      );
       const data = await response.json();
       setForm(data.category);
     }
     // Fill form with existing data if route indicates 'update' and set fetch url
     if (props.title === 'Update') {
       fetchCategory();
-      setPostUrl(`/api/category/${id}/update`);
+      setPostUrl(
+        `https://davi-server-inventory.herokuapp.com/api/category/${id}/update`
+      );
     } else {
-      setPostUrl(`/api/category/create`);
+      setPostUrl(
+        `https://davi-server-inventory.herokuapp.com/api/category/create`
+      );
     }
   }, [props.title, id]);
 
